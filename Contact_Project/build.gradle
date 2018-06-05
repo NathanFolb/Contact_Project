@@ -11,7 +11,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 jar {
-	baseName = 'SpringExamples'
+	baseName = 'Contact_Project'
 	version = '0.1.0'
 }
 repositories {
