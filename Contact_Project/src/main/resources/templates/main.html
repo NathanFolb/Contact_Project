@@ -1,0 +1,21 @@
+<html>
+	<head>
+	    <title>Liste des contacts</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+    <body>
+       <tr th:each="e : ${list}">
+       		<td>Prenom : </td>
+      		<td th:text="${e.getFirstName()}"/><br/>
+      		<td>Nom : </td>
+      		<td th:text="${e.getLastName()}"/><br/>
+      		<td>Email : </td>
+      		<td th:text="${e.getEmail()}"/><br/>
+      		<td>Numero de telephone : </td>
+      		<td th:text="${e.getNumberPhone()}"/><br/>
+      		<input  type="button" th:onclick="${e.getUrlDelete()}" value="Supprimer ce contact"/><br/>
+      		<input type="button" th:onclick="${e.getUrlModify()}"  value="Modifier un contact" /><br/>
+		</tr>
+		 <input type="button" onclick="location.href='/form.html'"  value="Ajouter un contact" />
+    </body>
+</html>
