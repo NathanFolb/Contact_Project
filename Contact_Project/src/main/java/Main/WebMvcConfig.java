@@ -2,21 +2,11 @@ package Main;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.MessageCodesResolver;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -30,37 +20,20 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-@Controller
-public class ContactFormController implements WebMvcConfigurer{
-	
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
-	@Autowired
-	ContactRepository repository;
-	
-	 @Override
-	  public void addViewControllers(ViewControllerRegistry registry) {
-	       registry.addViewController("/index").setViewName("main");
-	  }
-	 
-	 @GetMapping("/form")
-	    public String showForm(ContactForm contactForm) {
-	        return "form";
-	    }
-
-	    @PostMapping("/index")
-	    public String checkPersonInfo(@Valid ContactForm contactForm, BindingResult bindingResult) 
-	    {
-	        if (bindingResult.hasErrors()) {
-	            return "form";
-	        }
-	        if(repository.save(new Contact(contactForm.getId(), contactForm.getFirstName(), contactForm.getLastName(), contactForm.getNumberPhone(), contactForm.getEmail())) == null) {
-	        	log.info("Contact non sauvegardé");
-	        	return "form";
-	    	}
-	        return "redirect:/index";
-	    }
-	    
+ 
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+ 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //
+        // Access Bootstrap static resource:
+        //
+        // http://somedomain/SomeContextPath/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css
+        //
+        registry.addResourceHandler("/webjars/**") //
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 
 	@Override
 	public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -99,12 +72,13 @@ public class ContactFormController implements WebMvcConfigurer{
 	}
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-     
+	public void addCorsMappings(CorsRegistry registry) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void addCorsMappings(CorsRegistry registry) {
+	public void addViewControllers(ViewControllerRegistry registry) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -162,4 +136,5 @@ public class ContactFormController implements WebMvcConfigurer{
 		// TODO Auto-generated method stub
 		return null;
 	}
+ 
 }

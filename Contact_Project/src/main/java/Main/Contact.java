@@ -74,7 +74,7 @@ public class Contact {
 	}
 
 	public String toString() {
-        return "Contact(Prénom: " + this.firstName + ", Nom: "+ this.lastName + ", Numero telephone: " + this.numberPhone + ", Email: " + this.email + ")";
+        return "Contact(PrÃ©nom: " + this.firstName + ", Nom: "+ this.lastName + ", Numero telephone: " + this.numberPhone + ", Email: " + this.email + ")";
     }
 	public String getUrlDelete() {
 		return "location.href='/delete/"+this.id+"'";
